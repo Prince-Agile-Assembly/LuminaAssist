@@ -147,6 +147,58 @@ A multilingual voice-controlled academic assistant designed for college teachers
 - **Install button not showing**: Try using Chrome or Edge
 - **Installation fails**: Clear browser cache and try again
 
+## Deployment on Render
+
+### Prerequisites for Render Deployment
+
+1. **GitHub Repository**: Push your code to GitHub
+2. **Gemini API Key**: Get your API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
+3. **Render Account**: Sign up at [render.com](https://render.com)
+
+### Quick Deployment Steps
+
+1. **Connect Repository**:
+   - Log in to Render dashboard
+   - Click "New +" → "Web Service"
+   - Connect your GitHub repository
+
+2. **Configure Service**:
+   - **Build Command**: `npm install && npm run build`
+   - **Start Command**: `npm start`
+   - **Environment**: Node.js (auto-detected)
+
+3. **Set Environment Variables**:
+   - `GEMINI_API_KEY`: Your Google Gemini API key
+   - `NODE_ENV`: `production`
+
+4. **Deploy**: Click "Create Web Service"
+
+### Deployment Files Included
+
+- **render.yaml**: Service configuration
+- **.nvmrc**: Node.js version (20)
+- **Procfile**: Start command
+- **.renderignore**: Files to exclude from deployment
+- **deploy/**: Deployment documentation and utilities
+
+### Production Features
+
+✅ **HTTPS**: Required for microphone access (automatic on Render)  
+✅ **PWA**: Service worker and manifest included  
+✅ **Performance**: Optimized build with asset compression  
+✅ **Monitoring**: Health checks configured  
+✅ **Scaling**: Ready for Render's auto-scaling  
+
+### Post-Deployment Testing
+
+1. Test voice recognition (needs microphone permission)
+2. Verify AI responses with different languages
+3. Test PWA installation
+4. Check theme switching
+5. Test all multilingual features
+
+For detailed deployment instructions, see `deploy/render-deploy.md`.
+
 ## Development
 
 ### Project Structure

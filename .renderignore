@@ -1,0 +1,41 @@
+# Render ignore file
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Development files
+.replit
+replit.nix
+
+# IDE and editor files
+.vscode/
+.idea/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+node_modules/
+
+# Build directories that will be rebuilt
+dist/
+client/dist/
+
+# Testing
+coverage/
+
+# Optional npm cache directory
+.npm
+
+# ESLint cache
+.eslintcache

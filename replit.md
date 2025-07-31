@@ -88,6 +88,14 @@ Preferred communication style: Simple, everyday language.
 2. Backend: ESBuild bundles Express server to `dist/index.js`
 3. Static assets served by Express with Vite middleware in development
 
+### Render Deployment
+- **Added**: Complete Render deployment configuration
+- **Files**: render.yaml, .nvmrc, Procfile, .renderignore
+- **Build Command**: `npm install && npm run build`
+- **Start Command**: `npm start`
+- **Environment**: Node.js 20, HTTPS enabled automatically
+- **Documentation**: Comprehensive deployment guide in `deploy/` folder
+
 ### Database Configuration
 - Drizzle ORM configured for PostgreSQL
 - Connection via `DATABASE_URL` environment variable
@@ -97,7 +105,8 @@ Preferred communication style: Simple, everyday language.
 ### PWA Features
 - Service worker for offline functionality
 - Web app manifest for installability
-- Icon assets for various device sizes
+- Icon assets (SVG format) for various device sizes
 - Background sync capabilities for future enhancement
+- HTTPS requirement met by Render for microphone access
 
-The application is designed to work seamlessly across devices with a focus on accessibility and ease of use in educational environments.
+The application is designed to work seamlessly across devices with a focus on accessibility and ease of use in educational environments. Ready for production deployment on Render without Docker.
