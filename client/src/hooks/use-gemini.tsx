@@ -10,7 +10,7 @@ export function useGemini() {
     setIsLoading(true);
     
     try {
-      const response = await fetch('/api/gemini', {
+      const response = await fetch('/api/ai', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -27,6 +27,12 @@ export function useGemini() {
       }
 
       const data = await response.json();
+      
+      // Log which AI provider was used for transparency
+      if (data.provider) {
+        console.log(`🤖 Response from: ${data.provider} (${data.quotaStatus})`);
+      }
+      
       return data.response || 'I apologize, but I was unable to generate a response. Please try again.';
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Failed to connect to Gemini API';

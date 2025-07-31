@@ -28,8 +28,16 @@ Render will automatically detect the Node.js project. Verify these settings:
 
 In the Render dashboard, add these environment variables:
 
-- **GEMINI_API_KEY**: Your Google Gemini API key
+**Required:**
+- **GEMINI_API_KEY**: Your Google Gemini API key (current)
 - **NODE_ENV**: `production`
+
+**Recommended for Higher Quotas:**
+- **DEEPSEEK_API_KEY**: DeepSeek V3 API key (much higher quotas)
+- **HUGGINGFACE_API_KEY**: Hugging Face token (unlimited free)
+- **MISTRAL_API_KEY**: Mistral AI key (high quotas)
+
+> See `deploy/ai-providers-setup.md` for detailed setup instructions
 
 ### 4. Deploy
 
