@@ -3,7 +3,7 @@ services:
     name: lumina-academic-assistant
     env: node
     plan: free
-    buildCommand: npm install && npm run build
+    buildCommand: npm install && npm run build && node deploy/post-build.js
     startCommand: npm start
     envVars:
       - key: NODE_ENV

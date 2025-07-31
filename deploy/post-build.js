@@ -11,45 +11,42 @@ const rootDir = path.resolve(__dirname, '..');
 
 console.log('Running post-build script...');
 
-// Ensure static files are in the correct location for production
+// Fix the static files path for production
+// The server expects files at ./public but they're built to ./dist/public
 const distPublicPath = path.join(rootDir, 'dist', 'public');
-const manifestSrc = path.join(rootDir, 'client', 'public', 'manifest.json');
-const manifestDest = path.join(distPublicPath, 'manifest.json');
-const swSrc = path.join(rootDir, 'client', 'public', 'sw.js');
-const swDest = path.join(distPublicPath, 'sw.js');
-const iconsSrc = path.join(rootDir, 'client', 'public', 'icons');
-const iconsDest = path.join(distPublicPath, 'icons');
+const publicPath = path.join(rootDir, 'public');
 
 try {
-  // Copy manifest.json
-  if (fs.existsSync(manifestSrc)) {
-    fs.copyFileSync(manifestSrc, manifestDest);
-    console.log('✓ Copied manifest.json');
+  // Remove existing public directory if it exists
+  if (fs.existsSync(publicPath)) {
+    fs.rmSync(publicPath, { recursive: true, force: true });
+    console.log('✓ Removed existing public directory');
+  }
+  
+  // Create symlink from public to dist/public
+  try {
+    fs.symlinkSync(distPublicPath, publicPath, 'dir');
+    console.log('✓ Created symlink: public -> dist/public');
+  } catch (symlinkError) {
+    console.log('⚠️  Symlink failed, copying files instead...');
+    // If symlink fails, copy the directory
+    fs.cpSync(distPublicPath, publicPath, { recursive: true });
+    console.log('✓ Copied dist/public to public');
   }
 
-  // Copy service worker
-  if (fs.existsSync(swSrc)) {
-    fs.copyFileSync(swSrc, swDest);
-    console.log('✓ Copied service worker');
-  }
-
-  // Copy icons directory
-  if (fs.existsSync(iconsSrc)) {
-    if (!fs.existsSync(iconsDest)) {
-      fs.mkdirSync(iconsDest, { recursive: true });
+  // Verify files exist
+  const requiredFiles = ['index.html', 'manifest.json'];
+  for (const file of requiredFiles) {
+    if (!fs.existsSync(path.join(publicPath, file))) {
+      throw new Error(`Required file missing: public/${file}`);
     }
-    const iconFiles = fs.readdirSync(iconsSrc);
-    iconFiles.forEach(file => {
-      fs.copyFileSync(
-        path.join(iconsSrc, file),
-        path.join(iconsDest, file)
-      );
-    });
-    console.log('✓ Copied icon files');
   }
 
-  console.log('Post-build script completed successfully!');
+  console.log('✓ Post-build script completed successfully!');
+  console.log('📁 Static files available at both:');
+  console.log('  - dist/public/ (build output)');
+  console.log('  - public/ (server expected location)');
 } catch (error) {
-  console.error('Post-build script failed:', error);
+  console.error('❌ Post-build script failed:', error.message);
   process.exit(1);
 }

@@ -20,7 +20,7 @@
 Render will automatically detect the Node.js project. Verify these settings:
 
 - **Environment**: `Node`
-- **Build Command**: `npm install && npm run build`
+- **Build Command**: `npm install && npm run build && node deploy/post-build.js`
 - **Start Command**: `npm start`
 - **Node Version**: `20` (specified in `.nvmrc`)
 
@@ -78,6 +78,10 @@ Once deployed, your app will be available at:
 3. **Build failures**:
    - Check Node.js version compatibility
    - Verify all dependencies are in package.json
+   
+4. **White screen after deployment**:
+   - Ensure the post-build script runs successfully
+   - Check that static files are properly symlinked from public/ to dist/public/
 
 4. **PWA not installing**:
    - HTTPS is required (provided by Render)
